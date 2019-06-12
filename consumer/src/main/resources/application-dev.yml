@@ -1,0 +1,7 @@
+kafka:
+  bootstrapServer: 192.168.99.100:9092
+  groupId: com.rataj
+  concurrentConsumers: 2
+  securityProtocol: PLAINTEXT
+  topics:
+    create: person.create
