@@ -29,7 +29,7 @@ public class KafkaConsumerConfiguration {
     public ConsumerFactory<String, Person> consumerFactory() {
         Map<String, Object> properties = new HashMap<>();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServer());
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group");
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getGroupId());
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "60000");
         ErrorHandlingDeserializer2<String> headerErrorHandlingDeserializer

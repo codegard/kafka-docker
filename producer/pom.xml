@@ -18,6 +18,19 @@
 		<java.version>11</java.version>
 	</properties>
 
+	<profiles>
+		<!--Dev as default profile-->
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,6 +54,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>producer</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

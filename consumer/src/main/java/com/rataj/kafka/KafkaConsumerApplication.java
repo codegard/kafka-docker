@@ -14,16 +14,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 @SpringBootApplication
 public class KafkaConsumerApplication {
 
-    @Autowired
-    ConsumerFactory<String, Person> consumerFactory;
-
     public static void main(String[] args) {
         SpringApplication.run(KafkaConsumerApplication.class, args);
-    }
-
-    @Bean
-    CommandLineRunner commandLineRunner() {
-        return (args) -> consumerFactory.createConsumer();
     }
 
 }

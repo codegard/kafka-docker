@@ -13,13 +13,21 @@ public class KafkaProperties {
     @NotEmpty
     private String bootstrapServer;
     private String securityProtocol;
-    private Map<String, String> topics;
+    private Topics topics;
     @Min(1)
     private Integer concurrentConsumers;
     private String groupId;
 
     public String getBootstrapServer() {
         return bootstrapServer;
+    }
+
+    public Topics getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Topics topics) {
+        this.topics = topics;
     }
 
     public void setBootstrapServer(String bootstrapServer) {
@@ -32,14 +40,6 @@ public class KafkaProperties {
 
     public void setSecurityProtocol(String securityProtocol) {
         this.securityProtocol = securityProtocol;
-    }
-
-    public Map<String, String> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(Map<String, String> topics) {
-        this.topics = topics;
     }
 
     public Integer getConcurrentConsumers() {
@@ -56,5 +56,18 @@ public class KafkaProperties {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public static class Topics {
+
+        private String create;
+
+        public String getCreate() {
+            return create;
+        }
+
+        public void setCreate(String create) {
+            this.create = create;
+        }
     }
 }

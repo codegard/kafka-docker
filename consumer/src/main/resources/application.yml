@@ -1,5 +1,2 @@
-spring:
-  profiles:
-    active: @activeProfile@
 server:
   port: 8080
