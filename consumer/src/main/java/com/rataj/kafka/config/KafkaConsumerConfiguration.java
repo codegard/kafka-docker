@@ -1,11 +1,16 @@
 package com.rataj.kafka.config;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rataj.kafka.model.Person;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -35,7 +40,7 @@ public class KafkaConsumerConfiguration {
         ErrorHandlingDeserializer2<String> headerErrorHandlingDeserializer
                 = new ErrorHandlingDeserializer2<>(new StringDeserializer());
         ErrorHandlingDeserializer2<Person> errorHandlingDeserializer
-                = new ErrorHandlingDeserializer2<>(new JsonDeserializer<>(Person.class));
+                = new ErrorHandlingDeserializer2<>(new JsonDeserializer<>(Person.class, objectMapper()));
         return new DefaultKafkaConsumerFactory<>(properties, headerErrorHandlingDeserializer, errorHandlingDeserializer);
     }
 
@@ -47,6 +52,13 @@ public class KafkaConsumerConfiguration {
         kafkaListenerContainerFactory.setConsumerFactory(consumerFactory);
         kafkaListenerContainerFactory.setErrorHandler(new KafkaErrorHandler());
         return kafkaListenerContainerFactory;
+    }
+
+    private ObjectMapper objectMapper() {
+        return Jackson2ObjectMapperBuilder.json()
+                .visibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+                .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .build();
     }
 
 }

@@ -2,23 +2,29 @@ package com.rataj.kafka.service;
 
 import com.rataj.kafka.model.Person;
 import com.rataj.kafka.model.Profession;
+import org.springframework.messaging.Message;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-class PersonGenerator {
+class PersonMessageGenerator {
 
-    private PersonGenerator() {
+    private PersonMessageGenerator() {
         throw new UnsupportedOperationException();
     }
 
-    static Person generate() {
-        return new Person(
+    static Message<Person> generate() {
+        Person payload = new Person(
                 randomName(),
                 randomSurname(),
                 ThreadLocalRandom.current().nextInt(18, 50),
                 Profession.values()[ThreadLocalRandom.current().nextInt(0, Profession.values().length)]
         );
+        return new PersonMessage.PersonMessageBuilder()
+                .withKey(payload.profession().name())
+                .withPayload(payload)
+                .withTopic("person.create")
+                .build();
     }
 
     private static String randomName() {
