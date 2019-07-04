@@ -2,7 +2,7 @@ package com.rataj.kafka.model;
 
 import java.util.UUID;
 
-public class Person {
+public final class Person {
 
     private final UUID id;
     private final String name;

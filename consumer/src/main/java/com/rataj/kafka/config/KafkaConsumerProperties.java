@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Map;
 
 @ConfigurationProperties(prefix = "kafka")
-public class KafkaProperties {
+public class KafkaConsumerProperties {
 
     @NotEmpty
     private String bootstrapServer;

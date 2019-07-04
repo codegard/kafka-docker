@@ -9,12 +9,12 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PersonMessage implements Message<Person> {
+class PersonMessage implements Message<Person> {
 
     private final MessageHeaders headers;
     private final Person payload;
 
-    PersonMessage(PersonMessageBuilder builder) {
+    private PersonMessage(Builder builder) {
         this.headers = new MessageHeaders(builder.headers);
         this.payload = builder.payload;
     }
@@ -29,24 +29,24 @@ public class PersonMessage implements Message<Person> {
         return headers;
     }
 
-    static class PersonMessageBuilder {
+    static class Builder {
 
         private Map<String, Object> headers;
         private Person payload;
 
-        PersonMessageBuilder() {
+        private Builder(Person payload) {
+            this.payload = payload;
             this.headers = new HashMap<>();
         }
 
-        PersonMessageBuilder withPayload(Person payload) {
+        static Builder withPayload(Person payload) {
             if (payload == null) {
                 throw new IllegalArgumentException();
             }
-            this.payload = payload;
-            return this;
+            return new Builder(payload);
         }
 
-        PersonMessageBuilder withTopic(String topic) {
+        Builder withTopic(String topic) {
             if (StringUtils.isEmpty(topic)) {
                 throw new IllegalArgumentException();
             }
@@ -54,7 +54,7 @@ public class PersonMessage implements Message<Person> {
             return this;
         }
 
-        PersonMessageBuilder withKey(String key) {
+        Builder withKey(String key) {
             if (StringUtils.isEmpty(key)) {
                 throw new IllegalArgumentException();
             }

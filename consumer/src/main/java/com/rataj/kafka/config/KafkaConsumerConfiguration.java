@@ -24,17 +24,17 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfiguration {
 
-    private final KafkaProperties kafkaProperties;
+    private final KafkaConsumerProperties kafkaConsumerProperties;
 
-    public KafkaConsumerConfiguration(KafkaProperties kafkaProperties) {
-        this.kafkaProperties = kafkaProperties;
+    public KafkaConsumerConfiguration(KafkaConsumerProperties kafkaConsumerProperties) {
+        this.kafkaConsumerProperties = kafkaConsumerProperties;
     }
 
     @Bean
     public ConsumerFactory<String, Person> consumerFactory() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServer());
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getGroupId());
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConsumerProperties.getBootstrapServer());
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConsumerProperties.getGroupId());
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "60000");
         ErrorHandlingDeserializer2<String> headerErrorHandlingDeserializer
@@ -48,7 +48,7 @@ public class KafkaConsumerConfiguration {
     public KafkaListenerContainerFactory<?> kafkaListenerContainerFactory(ConsumerFactory<String, Person> consumerFactory) {
         ConcurrentKafkaListenerContainerFactory<String, Person> kafkaListenerContainerFactory
                 = new ConcurrentKafkaListenerContainerFactory<>();
-        kafkaListenerContainerFactory.setConcurrency(kafkaProperties.getConcurrentConsumers());
+        kafkaListenerContainerFactory.setConcurrency(kafkaConsumerProperties.getConcurrentConsumers());
         kafkaListenerContainerFactory.setConsumerFactory(consumerFactory);
         kafkaListenerContainerFactory.setErrorHandler(new KafkaErrorHandler());
         return kafkaListenerContainerFactory;

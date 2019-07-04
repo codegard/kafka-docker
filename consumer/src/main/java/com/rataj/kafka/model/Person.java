@@ -1,21 +1,26 @@
 package com.rataj.kafka.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.swing.plaf.basic.BasicIconFactory;
 import java.util.UUID;
 
-public class Person {
+@JsonDeserialize(builder = Person.Builder.class)
+public final class Person {
 
     private final UUID id;
     private final String name;
     private final String surname;
-    private final int age;
+    private final Integer age;
     private final String profession;
 
-    public Person(UUID uuid, String name, String surname, int age, String profession) {
-        this.id = uuid;
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.profession = profession;
+    private Person(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.age = builder.age;
+        this.profession = builder.profession;
     }
 
     @Override
@@ -27,5 +32,44 @@ public class Person {
                 ", age=" + age +
                 ", profession='" + profession + '\'' +
                 '}';
+    }
+
+    @JsonPOJOBuilder
+    static class Builder {
+
+        private UUID id;
+        private String name;
+        private String surname;
+        private Integer age;
+        private String profession;
+
+        Builder withId(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        Builder withSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        Builder withAge(Integer age) {
+            this.age = age;
+            return this;
+        }
+
+        Builder withProffesion(String proffesion) {
+            this.profession = proffesion;
+            return this;
+        }
+
+        Person build() {
+            return new Person(this);
+        }
     }
 }
