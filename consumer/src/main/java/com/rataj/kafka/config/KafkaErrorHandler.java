@@ -1,6 +1,5 @@
 package com.rataj.kafka.config;
 
-import org.apache.commons.logging.Log;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.TopicPartition;
@@ -13,9 +12,7 @@ import org.springframework.kafka.support.serializer.DeserializationException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.BiPredicate;
 
 final class KafkaErrorHandler implements ContainerAwareErrorHandler {
 

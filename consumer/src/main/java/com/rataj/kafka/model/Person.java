@@ -3,7 +3,6 @@ package com.rataj.kafka.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import javax.swing.plaf.basic.BasicIconFactory;
 import java.util.UUID;
 
 @JsonDeserialize(builder = Person.Builder.class)
